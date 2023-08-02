@@ -1,7 +1,8 @@
 import openai
 import pandas as pd
+import os
 
-api_key = 'YOUR API KEY'
+api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = api_key
 
 class Mask:
