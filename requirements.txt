@@ -1,0 +1,6 @@
+# testing
+pytest==7.2.1
+
+# libraries
+pandas==1.5.3
+openai==0.27.2
