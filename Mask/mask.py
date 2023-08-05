@@ -9,7 +9,7 @@ class Mask:
     def __init__(self):
         pass
 
-    def mask_personal_data_with_gpt(self, text, api_key):
+    def mask_personal_data_with_gpt(self, text):
         mask_text = text
         placeholders = {
             "[NAME]": "[NAME]",
@@ -17,11 +17,15 @@ class Mask:
             "[PHONE]": "[PHONE]"}
     
         # Create a template for the prompt, indicating the personal data types to mask
-        prompt = f'''Please mask any personal information, such as name, surname or full name (including variations of first and last names and anything you consider a name), 
-                    address (including variations of street names, city names, index, region and country), and phone (including variations of phone numbers) 
-                    using the following tokens: [NAME], [ADDRESS], [PHONE] in {text}. Always consider that you are seeing this text for the first time. 
-                    If the address consists of multiple words and punctuation marks, combine them into a single mask. 
-                    Please keep the original text unchanged and do not add any additional content or modify the provided text.'''
+        prompt = f'''Please mask any personal information, such as name, surname or full name (including variations of first and last names and anything you consider a name),
+            address (including variations of street names, city names, index, region and country), and phone (including variations of phone numbers)
+            using the following tokens: [NAME], [ADDRESS], [PHONE] in the following text:
+
+            {text}
+
+            Always consider that you are seeing this text for the first time.
+            If the address consists of multiple words and punctuation marks, combine them into a single mask.
+            Please keep the original text unchanged and do not add any additional content or modify the provided text.'''
 
 
         # Call the GPT-3.5 API to get the masked text
