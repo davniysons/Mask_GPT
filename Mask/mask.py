@@ -43,7 +43,7 @@ class Mask:
             masked_text = masked_text.replace(key.upper(), value)
 
         if mask_text != masked_text:
-            return True
+            return masked_text
         else:
             return False
 
