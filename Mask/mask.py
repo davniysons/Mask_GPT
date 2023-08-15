@@ -3,8 +3,7 @@ import pandas as pd
 import os
 import re
 
-# api_key = os.getenv("OPENAI_API_KEY")
-api_key = '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'
+api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = api_key
 
 class Mask:
