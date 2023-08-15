@@ -3,7 +3,8 @@ import pandas as pd
 import os
 import re
 
-api_key = os.getenv("OPENAI_API_KEY")
+# api_key = os.getenv("OPENAI_API_KEY")
+api_key = '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'
 openai.api_key = api_key
 
 class Mask:
@@ -78,22 +79,22 @@ class Mask:
 
 
 
-mask_instance = Mask()
-text = '''I had an amazing time at The Riverside Cafe with my friend Sarah Johnson. The address, 123 Main Street, Pleasantville, was easy to find. The food was delightful, and the service was top-notch. Don't forget to try their special desserts! You can reach them at +1 (555) 123-4567. Highly recommended!'''
+# mask_instance = Mask()
+# text = '''I had an amazing time at The Riverside Cafe with my friend Sarah Johnson. The address, 123 Main Street, Pleasantville, was easy to find. The food was delightful, and the service was top-notch. Don't forget to try their special desserts! You can reach them at +1 (555) 123-4567. Highly recommended!'''
 
-#text = 'Julie Smith lives at 123 Firth Street, San Francisco. Her phone number is 555-1234.'
+# #text = 'Julie Smith lives at 123 Firth Street, San Francisco. Her phone number is 555-1234.'
 
-result, masked_data = mask_instance.mask_personal_data_with_gpt(text)
+# result, masked_data = mask_instance.mask_personal_data_with_gpt(text)
 
-if mask_instance.has_placeholders(result):
-    print('\nBEFORE:')
-    print(text)
-    print('\n\nAFTER:')
-    print(result)
-    print(masked_data)
-else:
-    print('NOTHING TO CHANGE')
-    print(text)  
-    print(identified_data)
+# if mask_instance.has_placeholders(result):
+#     print('\nBEFORE:')
+#     print(text)
+#     print('\n\nAFTER:')
+#     print(result)
+#     print(masked_data)
+# else:
+#     print('NOTHING TO CHANGE')
+#     print(text)  
+#     print(identified_data)
 
 # ######################################
