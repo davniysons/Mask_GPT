@@ -10,7 +10,7 @@ sys.path.insert(0, parent_dir)
 
 from Mask.mask import Mask
 
-with open('test_data/test_examples.json', 'r') as file:
+with open('test_data/test_examples_2.json', 'r') as file:
     json_data = file.read()
 test_text = json.loads(json_data)
 
@@ -32,29 +32,31 @@ test_text = json.loads(json_data)
 
 class MyTest(unittest.TestCase):
     def test_mask_name(self):
-        for i in range(len(test_text['unmasked'])):
-            mask = Mask()
-            text = test_text['unmasked'][i]
+        mask = Mask()
+        correct_count = 0  
 
+        for i, unmasked_text in enumerate(test_text['unmasked']):
+            text = unmasked_text
             result = mask.mask_personal_data_with_gpt(text)
-            result = result[0]
-            result = result.lstrip('. \n')
+            result = result[0].lstrip('. \n')
 
             print('\nBEFORE:')
             print(text)
             print('\nAFTER:')
             print(f"'{result}'")
 
-            correct = 0
             if result == test_text['masked'][i]:
                 print('Correct')
-                correct += 1
+                correct_count += 1
             else:
                 print('Incorrect masking')
 
-            time.sleep(20)
-            print('Correct masked %:')
-            print(correct / len(test_text['unmasked']) * 100 )
+            if i < len(test_text['unmasked']) - 1:
+                time.sleep(20)
+        
+        percentage_correct = (correct_count / len(test_text['unmasked'])) * 100
+        print('\nCorrect masked %:')
+        print(percentage_correct)
 
 if __name__ == '__main__':
     unittest.main()
