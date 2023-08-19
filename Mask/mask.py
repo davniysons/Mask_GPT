@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import re
 
+
 api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = api_key
 
@@ -54,46 +55,12 @@ class Mask:
 
         masked_data_dict = {key: value for key, value in matches}
 
-        if mask_text != masked_text:
-            return masked_text, masked_data_dict
+        for key, value in masked_data_dict.items():
+            text_checked = text.replace(f"[{key}]", value)
+
+        if text == text_checked:
+            return masked_text
         else:
-            return False, masked_data_dict
+            return False
         
         
-####################################    
-## FUNCTION TO CHECK PLACEHOLDERS ##
-####################################
-
-    def has_placeholders(self, text):
-        placeholders = ["[NAME]", "[ADDRESS]", "[PHONE]"]
-        for placeholder in placeholders:
-            if placeholder in text:
-                return True
-        return False
-    
-####################################    
-## FUNCTION TO CHECK VALID CHANGE ##
-####################################
-
-
-
-
-# mask_instance = Mask()
-# text = '''I had an amazing time at The Riverside Cafe with my friend Sarah Johnson. The address, 123 Main Street, Pleasantville, was easy to find. The food was delightful, and the service was top-notch. Don't forget to try their special desserts! You can reach them at +1 (555) 123-4567. Highly recommended!'''
-
-# #text = 'Julie Smith lives at 123 Firth Street, San Francisco. Her phone number is 555-1234.'
-
-# result, masked_data = mask_instance.mask_personal_data_with_gpt(text)
-
-# if mask_instance.has_placeholders(result):
-#     print('\nBEFORE:')
-#     print(text)
-#     print('\n\nAFTER:')
-#     print(result)
-#     print(masked_data)
-# else:
-#     print('NOTHING TO CHANGE')
-#     print(text)  
-#     print(identified_data)
-
-# ######################################
