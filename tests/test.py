@@ -12,6 +12,7 @@ from Mask.mask import Mask
 
 with open('test_data/test_examples.json', 'r') as file:
     json_data = file.read()
+
 test_text = json.loads(json_data)
 
 class MyTest(unittest.TestCase):
