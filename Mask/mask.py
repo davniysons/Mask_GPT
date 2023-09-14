@@ -4,8 +4,8 @@ import os
 import re
 
 
-api_key = os.getenv("OPENAI_API_KEY")
-openai.api_key = api_key
+#openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = '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'
 
 class Mask:
     def __init__(self):
@@ -22,15 +22,12 @@ class Mask:
         prompt = f'''Please mask any personal information, such as name, surname or full name (including variations of first and last names and anything you consider a name),
             address (including variations of street names, city names, index, region and country), and phone (including variations of phone numbers)
             using the following tokens: [NAME], [ADDRESS], [PHONE] in the following text:
-
             {text}
-
             Always consider that you are seeing this text for the first time.
             If the address consists of multiple words and punctuation marks, combine them into a single mask.
             Please keep the original text unchanged and do not add any additional content or modify the provided text.
             After that - add '%%%' in the end of returned text,
             and add at the end dictionary such as [NAME]: 'name what masked', [ADDRESS]: 'address what masked', etc'''
-
 
         # Call the GPT-3.5 API to get the masked text
         response = openai.Completion.create(
