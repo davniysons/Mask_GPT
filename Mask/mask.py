@@ -4,8 +4,8 @@ import os
 import re
 
 
-#openai.api_key = os.getenv("OPENAI_API_KEY")
-openai.api_key = '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'
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 class Mask:
     def __init__(self):
