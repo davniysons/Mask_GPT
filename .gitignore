@@ -1,3 +1,4 @@
 env/
-Mask/__pycache
+__pycache__/
 *~
+demo_lib.egg-info/
