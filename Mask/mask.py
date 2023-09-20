@@ -62,5 +62,3 @@ class Mask:
             return masked_text
         else:
             return False
-        
-        
