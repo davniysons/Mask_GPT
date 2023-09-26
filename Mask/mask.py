@@ -3,8 +3,8 @@ import pandas as pd
 import os
 import re
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
+#openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = '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'
 # Define the prompt outside of the class
 prompt = '''
 Please mask any personal information, such as name, surname or full name (including variations of first and last names and anything you consider a name),
@@ -22,44 +22,63 @@ class Mask:
     def __init__(self):
         pass
 
-    def mask_personal_data_with_gpt(self, text):
+    def format_prompt(self, text):
         placeholders = {
             "[NAME]": "[NAME]",
             "[ADDRESS]": "[ADDRESS]",
-            "[PHONE]": "[PHONE]"}
-    
-        # Inject the input text into the prompt
+            "[PHONE]": "[PHONE]"
+        }
+        
+        # Construct the prompt
         formatted_prompt = prompt.format(text=text)
+        return formatted_prompt
 
-        # Call the GPT-3.5 API to get the masked text
+    def call_gpt_api(self, formatted_prompt):
         response = openai.Completion.create(
             engine="text-davinci-003",
             prompt=formatted_prompt,
             max_tokens=500,
             api_key=openai.api_key,
-            temperature = 0.2
+            temperature=0.2
         )
-        
-        # Replace the placeholders in the response with the appropriate masked data
-        masked_text = response["choices"][0]["text"]
-        for key, value in placeholders.items():
-            masked_text = masked_text.replace(key.upper(), value)
+        return response
 
+    def extract_masked_data(self, masked_text):
         sections = masked_text.split('%%%')
-        masked_text = sections[0]
         masked_data = sections[1]
 
         pattern = r"\[([A-Z]+)\]: '([^']+)'"
         matches = re.findall(pattern, masked_data)
 
         masked_data_dict = {key: value for key, value in matches}
+        return masked_data_dict
+
+    def mask_personal_data_with_gpt(self, text):
+        # Format the prompt
+        formatted_prompt = self.format_prompt(text)
+
+        # Call the GPT-3.5 API to get the masked text
+        response = self.call_gpt_api(formatted_prompt)
+        
+        # Replace the placeholders in the response with the appropriate masked data
+        masked_text = response["choices"][0]["text"]
+        placeholders = {
+            "[NAME]": "[NAME]",
+            "[ADDRESS]": "[ADDRESS]",
+            "[PHONE]": "[PHONE]"
+        }
+        for key, value in placeholders.items():
+            masked_text = masked_text.replace(key.upper(), value)
+
+        # Extract and return the masked data dictionary
+        masked_data_dict = self.extract_masked_data(masked_text)
 
         text_checked = text
         for key, value in masked_data_dict.items():
-            text_checked = text.replace(f"[{key}]", value)
+            text_checked = text_checked.replace(f"[{key}]", value)
 
         if text == text_checked:
-            return masked_text
+            return masked_text.split('%%%')[0]
         else:
             return False
         
