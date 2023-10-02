@@ -62,13 +62,10 @@ class Mask:
         
         # Replace the placeholders in the response with the appropriate masked data
         masked_text = response["choices"][0]["text"]
-        placeholders = {
-            "[NAME]": "[NAME]",
-            "[ADDRESS]": "[ADDRESS]",
-            "[PHONE]": "[PHONE]"
-        }
-        for key, value in placeholders.items():
-            masked_text = masked_text.replace(key.upper(), value)
+        placeholders = {}
+
+        # for key, value in placeholders.items():
+        #     masked_text = masked_text.replace(key.upper(), value)
 
         # Extract and return the masked data dictionary
         masked_data_dict = self.extract_masked_data(masked_text)
