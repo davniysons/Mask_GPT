@@ -3,8 +3,8 @@ import pandas as pd
 import os
 import re
 
-#openai.api_key = os.getenv("OPENAI_API_KEY")
-openai.api_key = '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'
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 # Define the prompt outside of the class
 prompt = '''
 Please mask any personal information, such as name, surname or full name (including variations of first and last names and anything you consider a name),
